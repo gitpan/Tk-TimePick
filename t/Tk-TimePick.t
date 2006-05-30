@@ -22,7 +22,7 @@ BEGIN { use_ok('Tk::TimePick') };
  	-order		=> "hms",
  	-separator	=> ':',
  	-seconds		=> "00",
- 	-maxhours	=> 24,
+ 	-maxhours	=> 23,
  	));
  isa_ok($tp, "Tk::TimePick");
  isa_ok($tp, "Tk::Frame");
@@ -120,7 +120,7 @@ BEGIN { use_ok('Tk::TimePick') };
 
  ok($tp->SetOrder("hms"));
  ok($tp->SetSeparator(':'));
- ok($tp->SetMaxHours(24));
+ ok($tp->SetMaxHours(23));
  ok($tp->SetSeconds(30));
  ok($tp->SetMinutes(30));
  ok($tp->SetHours(12));
@@ -158,8 +158,11 @@ BEGIN { use_ok('Tk::TimePick') };
  	-command	=> sub { exit(); },
  	)->pack();
 #-------------------------------------------------
+ $mw->after(2000, sub { $mw->destroy(); });
  MainLoop();
 #-------------------------------------------------
+
+
 
 
 

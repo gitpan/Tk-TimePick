@@ -11,7 +11,7 @@
  use vars '$AUTOLOAD';
 #-------------------------------------------------
  @Tk::TimePick::ISA = qw(Tk::Frame);
- $Tk::TimePick::VERSION = '0.01';
+ $Tk::TimePick::VERSION = '0.02';
  Construct Tk::Widget "TimePick";
 #-------------------------------------------------
  sub Populate
@@ -28,8 +28,8 @@
  		delete($args->{-separator}) : ':';
 # -maxhours
  	$tp->{_maxhours} = (defined($args->{-maxhours})) ? 
- 		delete($args->{-maxhours}) : 24;
- 	$tp->{_maxhours} = 24 if(!(($tp->{_maxhours} == 12) or ($tp->{_maxhours} == 24)));
+ 		delete($args->{-maxhours}) : 23;
+ 	$tp->{_maxhours} = 23 if(!(($tp->{_maxhours} == 12) or ($tp->{_maxhours} == 23)));
 # -seconds
  	$tp->{_seconds} = (defined($args->{-seconds})) ? 
  		delete($args->{-seconds}) : (localtime())[0];
@@ -384,13 +384,13 @@
 #-------------------------------------------------
  sub SetMaxHours
  	{
- 	if(($_[1] == 12) or ($_[1] == 24))
+ 	if(($_[1] == 12) or ($_[1] == 23))
  		{
  		$_[0]->{_maxhours} = $_[1];
  		}
  	else
  		{
- 		$_[0]->{_maxhours} = 24;
+ 		$_[0]->{_maxhours} = 23;
  		}
  	return(1);
  	}
@@ -425,14 +425,14 @@
 #-------------------------------------------------
  sub HoursReduce
  	{
- 	if($_[0]->{_hours} <= 1) { $_[0]->{_hours} = $_[0]->{_maxhours}; }
+ 	if($_[0]->{_hours} <= 0) { $_[0]->{_hours} = $_[0]->{_maxhours}; }
  	else { $_[0]->{_hours}--; }
  	return($_[0]->GetTime());
  	}
 #-------------------------------------------------
  sub HoursIncrease
  	{
- 	if($_[0]->{_hours} >= $_[0]->{_maxhours}) { $_[0]->{_hours} = 1; }
+ 	if($_[0]->{_hours} >= $_[0]->{_maxhours}) { $_[0]->{_hours} = 0; }
  	else { $_[0]->{_hours}++; }
  	return($_[0]->GetTime());
  	}
@@ -529,7 +529,7 @@ Tk::TimePick - Perl extension for a graphical user interface to pick timestrings
  my $tp = $mw->TimePick(
  	-order		=> "smh", 	# default = "hms"
  	-separator	=> "<>",		# default = ':'
- 	-maxhours	=> 12,		# default = 24
+ 	-maxhours	=> 12,		# default = 23
  	-seconds		=> 30,		# default = (localtime())[0]
  	-minutes		=> 30,		# default = (localtime())[1]
  	-hours		=> 12,		# default = (localtime())[2]
@@ -576,7 +576,7 @@ The order of hours, minutes and seconds.
 
 =item -maxhours
 
- times in 24 or 12 hours (default = 24)
+ times in 23 or 12 hours (default = 23)
 
 =item -seconds
 
@@ -712,4 +712,7 @@ at your option, any later version of Perl 5 you may have available.
 
 
 =cut
+
+
+
 
